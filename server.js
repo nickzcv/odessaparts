@@ -4,7 +4,7 @@ const app = express();
 
 const port = 80;
 
-app.use(morgan('combined'));
+app.use(morgan('tiny'));
 app.use('/', express.static('./'));
 app.set('port', port);
 app.listen(app.get('port') || port, function() {
