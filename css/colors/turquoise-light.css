@@ -1,0 +1,101 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+.teaser-text-animation span, .teaser-text-animation-2 span, .teaser-text-animation-3 span, .teaser-text-animation-4 span, .teaser-text-animation-5 span {
+color: #34c5ba;
+}
+
+#intro-title {
+color: #34c5ba;
+}
+
+a {
+color: #34c5ba;
+}
+
+p a {
+color: #34c5ba;
+}
+
+.awesome {
+color: #34c5ba;
+}
+
+.submit:after {
+background: #34c5ba;
+}
+
+#form .error {
+color: #34c5ba;
+}
+
+
+@-webkit-keyframes glow {
+    0% {
+		border-color: #34c5ba;
+		box-shadow: 0 0 5px rgba(0,0,0,0.2), inset 0 0 5px rgba(0,0,0,0.1)
+    }	
+    100% {
+		border-color: #34c5ba;
+		box-shadow: 0 0 20px rgba(0,0,0,0.6), inset 0 0 10px rgba(0,0,0,0.4)
+    }
+}
+@-moz-keyframes glow {
+    0% {
+		border-color: #34c5ba;
+		box-shadow: 0 0 5px rgba(0,0,0,0.2), inset 0 0 5px rgba(0,0,0,0.1)
+    }	
+    100% {
+		border-color: #34c5ba;
+		box-shadow: 0 0 20px rgba(0,0,0,0.6), inset 0 0 10px rgba(0,0,0,0.4)
+    }
+}
+@-o-keyframes glow {
+    0% {
+		border-color: #34c5ba;
+		box-shadow: 0 0 5px rgba(0,0,0,0.2), inset 0 0 5px rgba(0,0,0,0.1)
+    }	
+    100% {
+		border-color: #34c5ba;
+		box-shadow: 0 0 20px rgba(0,0,0,0.6), inset 0 0 10px rgba(0,0,0,0.4)
+    }
+}
+@-ms-keyframes glow {
+    0% {
+		border-color: #34c5ba;
+		box-shadow: 0 0 5px rgba(0,0,0,0.2), inset 0 0 5px rgba(0,0,0,0.1)
+    }	
+    100% {
+		border-color: #34c5ba;
+		box-shadow: 0 0 20px rgba(0,0,0,0.6), inset 0 0 10px rgba(0,0,0,0.4)
+    }
+}
+@keyframes glow {
+    0% {
+		border-color: #34c5ba;
+		box-shadow: 0 0 5px rgba(0,0,0,0.2), inset 0 0 5px rgba(0,0,0,0.1)
+    }	
+    100% {
+		border-color: #34c5ba;
+		box-shadow: 0 0 20px rgba(0,0,0,0.6), inset 0 0 10px rgba(0,0,0,0.4)
+    }
+}
+
+
+#subscribe input#submit {
+background: #34c5ba;
+border: 1px solid #34c5ba;
+}
+
+ul#countdown li span.seconds {
+color: #34c5ba;
+}
+
+ul#countdown li p.timeRefSeconds {
+color: #34c5ba;
+}
+
+.options-head {
+background: #34c5ba;
+}
