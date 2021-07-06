@@ -6,21 +6,21 @@ import { IDirection, ILanguage } from '~/interfaces/language';
 import { LanguageLocaleContext, LanguageSetLocaleContext } from '~/services/i18n/context';
 
 export function useLocale() {
-    return useContext(LanguageLocaleContext);
+  return useContext(LanguageLocaleContext);
 }
 
 export function useSetLocale() {
-    return useContext(LanguageSetLocaleContext);
+  return useContext(LanguageSetLocaleContext);
 }
 
 export function useLanguage(): ILanguage {
-    const locale = useLocale();
+  const locale = useLocale();
 
-    return useMemo(() => getAllLanguages().find((language) => language.locale === locale)!, [locale]);
+  return useMemo(() => getAllLanguages().find((language) => language.locale === locale)!, [locale]);
 }
 
 export function useDirection(): IDirection {
-    const { direction } = useLanguage();
+  const { direction } = useLanguage();
 
-    return direction;
+  return direction;
 }

@@ -10,20 +10,20 @@ interface Props extends React.HTMLAttributes<HTMLElement> {
 }
 
 function FooterLinks(props: Props) {
-    const { header, links } = props;
+  const { header, links } = props;
 
-    return (
-        <div className="footer-links">
-            <h5 className="footer-links__title">{header}</h5>
-            <ul className="footer-links__list">
-                {links.map((link, index) => (
-                    <li key={index} className="footer-links__item">
-                        <AppLink href={link.url} className="footer-links__link">{link.title}</AppLink>
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
+  return (
+    <div className="footer-links">
+      <h5 className="footer-links__title">{header}</h5>
+      <ul className="footer-links__list">
+        {links.map((link, index) => (
+          <li key={index} className="footer-links__item">
+            <AppLink href={link.url} className="footer-links__link">{link.title}</AppLink>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
 export default FooterLinks;

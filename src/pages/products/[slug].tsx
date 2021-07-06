@@ -13,28 +13,28 @@ interface Props {
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) => {
-    const slug = typeof params?.slug === 'string' ? params?.slug : null;
+  const slug = typeof params?.slug === 'string' ? params?.slug : null;
 
-    return {
-        props: {
-            product: slug ? await shopApi.getProductBySlug(slug) : null,
-        },
-    };
+  return {
+    props: {
+      product: slug ? await shopApi.getProductBySlug(slug) : null,
+    },
+  };
 };
 
 function Page(props: Props) {
-    const { product } = props;
+  const { product } = props;
 
-    if (product === null) {
-        return <SitePageNotFound />;
-    }
+  if (product === null) {
+    return <SitePageNotFound />;
+  }
 
-    return (
-        <ShopPageProduct
-            product={product}
-            layout="full"
-        />
-    );
+  return (
+    <ShopPageProduct
+      product={product}
+      layout="full"
+    />
+  );
 }
 
 export default Page;

@@ -8,35 +8,35 @@ import { accountApi } from '~/api';
 import { IOrder } from '~/interfaces/order';
 
 function Page() {
-    const router = useRouter();
-    const [order, setOrder] = useState<IOrder | null>(null);
-    const { token } = router.query;
+  const router = useRouter();
+  const [order, setOrder] = useState<IOrder | null>(null);
+  const { token } = router.query;
 
-    useEffect(() => {
-        let canceled = false;
+  useEffect(() => {
+    let canceled = false;
 
-        if ((typeof token === 'string')) {
-            accountApi.getOrderByToken(token).then((result) => {
-                if (canceled) {
-                    return;
-                }
-
-                setOrder(result);
-            });
-        } else {
-            setOrder(null);
+    if ((typeof token === 'string')) {
+      accountApi.getOrderByToken(token).then((result) => {
+        if (canceled) {
+          return;
         }
 
-        return () => {
-            canceled = true;
-        };
-    }, [token]);
-
-    if (!order) {
-        return null;
+        setOrder(result);
+      });
+    } else {
+      setOrder(null);
     }
 
-    return <ShopPageOrderSuccess order={order} />;
+    return () => {
+      canceled = true;
+    };
+  }, [token]);
+
+  if (!order) {
+    return null;
+  }
+
+  return <ShopPageOrderSuccess order={order} />;
 }
 
 export default Page;

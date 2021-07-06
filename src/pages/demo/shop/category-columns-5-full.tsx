@@ -12,20 +12,20 @@ interface Props {
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => ({
-    props: {
-        subcategories: await shopApi.getCategories({ depth: 1 }),
-    },
+  props: {
+    subcategories: await shopApi.getCategories({ depth: 1 }),
+  },
 });
 
 function Page(props: Props) {
-    const { subcategories } = props;
+  const { subcategories } = props;
 
-    return (
-        <ShopPageCategory
-            layout="columns-5-full"
-            subcategories={subcategories}
-        />
-    );
+  return (
+    <ShopPageCategory
+      layout="columns-5-full"
+      subcategories={subcategories}
+    />
+  );
 }
 
 export default Page;

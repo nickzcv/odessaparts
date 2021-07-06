@@ -13,27 +13,27 @@ interface Props {
 }
 
 function BlockBrands(props: Props) {
-    const { layout, brands } = props;
+  const { layout, brands } = props;
 
-    return (
-        <div className={`block block-brands block-brands--layout--${layout}`}>
-            <div className="container">
-                <ul className="block-brands__list">
-                    {brands.map((brand, brandIdx) => (
-                        <React.Fragment key={brandIdx}>
-                            <li className="block-brands__item">
-                                <AppLink href="/" className="block-brands__item-link">
-                                    <AppImage src={brand.image} />
-                                    <span className="block-brands__item-name">{brand.name}</span>
-                                </AppLink>
-                            </li>
-                            <li className="block-brands__divider" role="presentation" />
-                        </React.Fragment>
-                    ))}
-                </ul>
-            </div>
-        </div>
-    );
+  return (
+    <div className={`block block-brands block-brands--layout--${layout}`}>
+      <div className="container">
+        <ul className="block-brands__list">
+          {brands.map((brand, brandIdx) => (
+            <React.Fragment key={brandIdx}>
+              <li className="block-brands__item">
+                <AppLink href="/" className="block-brands__item-link">
+                  <AppImage src={brand.image} />
+                  <span className="block-brands__item-name">{brand.name}</span>
+                </AppLink>
+              </li>
+              <li className="block-brands__divider" role="presentation" />
+            </React.Fragment>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
 }
 
 export default React.memo(BlockBrands);

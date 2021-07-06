@@ -5,43 +5,43 @@ import { WISHLIST_ADD_ITEM, WISHLIST_REMOVE_ITEM, WishlistAction } from '~/store
 import { withClientState } from '~/store/client';
 
 function addItem(state: IWishlistState, product: IProduct): IWishlistState {
-    const itemIndex = state.items.findIndex((x) => x.id === product.id);
+  const itemIndex = state.items.findIndex((x) => x.id === product.id);
 
-    if (itemIndex === -1) {
-        return {
-            items: [
-                ...state.items,
-                JSON.parse(JSON.stringify(product)),
-            ],
-        };
-    }
+  if (itemIndex === -1) {
+    return {
+      items: [
+        ...state.items,
+        JSON.parse(JSON.stringify(product)),
+      ],
+    };
+  }
 
-    return state;
+  return state;
 }
 
 function removeItem(state: IWishlistState, productId: number): IWishlistState {
-    return {
-        items: state.items.filter((x) => x.id !== productId),
-    };
+  return {
+    items: state.items.filter((x) => x.id !== productId),
+  };
 }
 
 const initialState: IWishlistState = {
-    items: [],
+  items: [],
 };
 
 export const WISHLIST_NAMESPACE = 'wishlist';
 
 function wishlistBaseReducer(state = initialState, action: WishlistAction) {
-    switch (action.type) {
-    case WISHLIST_ADD_ITEM:
-        return addItem(state, action.product);
+  switch (action.type) {
+  case WISHLIST_ADD_ITEM:
+    return addItem(state, action.product);
 
-    case WISHLIST_REMOVE_ITEM:
-        return removeItem(state, action.productId);
+  case WISHLIST_REMOVE_ITEM:
+    return removeItem(state, action.productId);
 
-    default:
-        return state;
-    }
+  default:
+    return state;
+  }
 }
 
 const wishlistReducer = withClientState(wishlistBaseReducer, WISHLIST_NAMESPACE);

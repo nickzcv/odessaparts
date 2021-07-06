@@ -18,12 +18,12 @@ interface Props extends React.HTMLAttributes<HTMLElement> {
 }
 
 function BlockSpace(props: Props) {
-    const { layout, className, ...rootProps } = props;
-    const rootClasses = classNames('block-space', `block-space--layout--${layout}`, className);
+  const { layout, className, ...rootProps } = props;
+  const rootClasses = classNames('block-space', `block-space--layout--${layout}`, className);
 
-    return (
-        <div className={rootClasses} {...rootProps} />
-    );
+  return (
+    <div className={rootClasses} {...rootProps} />
+  );
 }
 
 export default React.memo(BlockSpace);

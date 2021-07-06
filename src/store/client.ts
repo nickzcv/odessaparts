@@ -12,14 +12,14 @@ type ApplyClientStateAction<T> = {
 };
 
 function isApplyClientStateAction<T extends any>(action: Action): action is ApplyClientStateAction<T> {
-    return action.type === APPLY_CLIENT_STATE;
+  return action.type === APPLY_CLIENT_STATE;
 }
 
 export function applyClientState<T extends object>(state: T): ApplyClientStateAction<T> {
-    return {
-        type: APPLY_CLIENT_STATE,
-        state,
-    };
+  return {
+    type: APPLY_CLIENT_STATE,
+    state,
+  };
 }
 
 export const useApplyClientState = () => useAppAction(applyClientState);
@@ -33,28 +33,28 @@ export function withClientState<
     S extends ReturnType<T>,
     R extends S & { stateFrom: IStateFrom }
 >(
-    reducer: T extends AppReducer<ReturnType<T> & { stateFrom: any }, any>
+  reducer: T extends AppReducer<ReturnType<T> & { stateFrom: any }, any>
         ? AppReducer<ReturnType<T> & { stateFrom: never }, any>
         : T,
-    namespace: string,
+  namespace: string,
 ): AppReducer<R> {
-    return (state: S, action: Action | ApplyClientStateAction<{ [ns: string]: any }>): R => {
-        const childState = reducer(state, action);
+  return (state: S, action: Action | ApplyClientStateAction<{ [ns: string]: any }>): R => {
+    const childState = reducer(state, action);
 
-        if (isApplyClientStateAction(action)) {
-            return {
-                ...(action.state[namespace] || childState),
-                stateFrom: 'client',
-            };
-        }
+    if (isApplyClientStateAction(action)) {
+      return {
+        ...(action.state[namespace] || childState),
+        stateFrom: 'client',
+      };
+    }
 
-        if ('stateFrom' in childState) {
-            return childState;
-        }
+    if ('stateFrom' in childState) {
+      return childState;
+    }
 
-        return {
-            ...childState,
-            stateFrom: 'server',
-        };
+    return {
+      ...childState,
+      stateFrom: 'server',
     };
+  };
 }

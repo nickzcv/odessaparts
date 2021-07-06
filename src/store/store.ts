@@ -11,52 +11,52 @@ import { IRootState } from '~/store/root/rootTypes';
 const STORAGE_KEY = 'red-parts/react';
 
 export const save = (state: any) => {
-    try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error(error);
-    }
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(error);
+  }
 };
 
 export const load = () => {
-    if (!process.browser) {
-        return undefined;
+  if (!process.browser) {
+    return undefined;
+  }
+
+  let state;
+
+  try {
+    state = localStorage.getItem(STORAGE_KEY);
+
+    if (typeof state === 'string') {
+      state = JSON.parse(state);
     }
 
-    let state;
-
-    try {
-        state = localStorage.getItem(STORAGE_KEY);
-
-        if (typeof state === 'string') {
-            state = JSON.parse(state);
-        }
-
-        if (state && state.version !== version) {
-            state = undefined;
-        }
-    } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error(error);
+    if (state && state.version !== version) {
+      state = undefined;
     }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(error);
+  }
 
-    return state || undefined;
+  return state || undefined;
 };
 
 const bindMiddleware = (...middleware: Middleware[]) => {
-    if (process.env.NODE_ENV !== 'production') {
-        // eslint-disable-next-line global-require
-        const { composeWithDevTools } = require('redux-devtools-extension');
+  if (process.env.NODE_ENV !== 'production') {
+    // eslint-disable-next-line global-require
+    const { composeWithDevTools } = require('redux-devtools-extension');
 
-        return composeWithDevTools(applyMiddleware(...middleware));
-    }
+    return composeWithDevTools(applyMiddleware(...middleware));
+  }
 
-    return applyMiddleware(...middleware);
+  return applyMiddleware(...middleware);
 };
 
 const makeStore: MakeStore<IRootState> = () => (
-    createStore(rootReducer, bindMiddleware(thunk))
+  createStore(rootReducer, bindMiddleware(thunk))
 );
 
 export const wrapper = createWrapper<IRootState>(makeStore);

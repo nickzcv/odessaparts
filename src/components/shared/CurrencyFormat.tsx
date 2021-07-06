@@ -10,16 +10,16 @@ interface Props {
 }
 
 function CurrencyFormat(props: Props) {
-    const { value, currency: propCurrency } = props;
-    const siteCurrency = useCurrency();
-    const currency = propCurrency || siteCurrency;
+  const { value, currency: propCurrency } = props;
+  const siteCurrency = useCurrency();
+  const currency = propCurrency || siteCurrency;
 
-    return (
-        <React.Fragment>
-            {currency.symbol}
-            {(value * currency.rate).toFixed(2)}
-        </React.Fragment>
-    );
+  return (
+    <React.Fragment>
+      {currency.symbol}
+      {(value * currency.rate).toFixed(2)}
+    </React.Fragment>
+  );
 }
 
 export default CurrencyFormat;

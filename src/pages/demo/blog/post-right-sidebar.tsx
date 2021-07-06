@@ -4,12 +4,12 @@ import React from 'react';
 import BlogPagePost from '~/components/blog/BlogPagePost';
 
 function Page() {
-    return (
-        <BlogPagePost
-            featuredImage
-            sidebarPosition="end"
-        />
-    );
+  return (
+    <BlogPagePost
+      featuredImage
+      sidebarPosition="end"
+    />
+  );
 }
 
 export default Page;

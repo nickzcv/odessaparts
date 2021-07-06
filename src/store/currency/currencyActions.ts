@@ -5,8 +5,8 @@ import { CURRENCY_CHANGE, CurrencyChangeAction } from '~/store/currency/currency
 import { ICurrency } from '~/interfaces/currency';
 
 export function currencyChange(currency: ICurrency): CurrencyChangeAction {
-    return {
-        type: CURRENCY_CHANGE,
-        currency,
-    };
+  return {
+    type: CURRENCY_CHANGE,
+    currency,
+  };
 }

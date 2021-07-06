@@ -2,10 +2,10 @@
 import { useAppAction, useAppSelector } from '~/store/hooks';
 import { USER_NAMESPACE } from '~/store/user/userReducer';
 import {
-    userEditProfile,
-    userSignIn,
-    userSignOut,
-    userSignUp,
+  userEditProfile,
+  userSignIn,
+  userSignOut,
+  userSignUp,
 } from '~/store/user/userAction';
 
 export const useUser = () => useAppSelector((state) => state[USER_NAMESPACE].current);

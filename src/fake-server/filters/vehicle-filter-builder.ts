@@ -13,38 +13,38 @@ export class VehicleFilterBuilder extends AbstractFilterBuilder {
     private vehicle: IVehicle | null = null;
 
     private static testCompatibility(vehicle: IVehicle, product: IProduct): boolean {
-        if (product.compatibility === 'all') {
-            return true;
-        }
-        if (product.compatibility === 'unknown') {
-            return false;
-        }
+      if (product.compatibility === 'all') {
+        return true;
+      }
+      if (product.compatibility === 'unknown') {
+        return false;
+      }
 
-        return product.compatibility.includes(vehicle.id);
+      return product.compatibility.includes(vehicle.id);
     }
 
     test(product: IProduct): boolean {
-        if (this.value) {
-            return this.vehicle !== null && VehicleFilterBuilder.testCompatibility(this.vehicle, product);
-        }
+      if (this.value) {
+        return this.vehicle !== null && VehicleFilterBuilder.testCompatibility(this.vehicle, product);
+      }
 
-        return true;
+      return true;
     }
 
     makeItems(products: IProduct[], value: string): void {
-        this.vehicle = dbVehicles.find((x) => x.id === parseFloat(value)) || null;
-        this.value = this.vehicle ? this.vehicle.id : null;
+      this.vehicle = dbVehicles.find((x) => x.id === parseFloat(value)) || null;
+      this.value = this.vehicle ? this.vehicle.id : null;
     }
 
     calc(): void { }
 
     build(): IVehicleFilter {
-        return {
-            type: 'vehicle',
-            slug: this.slug,
-            name: this.name,
-            value: this.value,
-            vehicle: this.vehicle,
-        };
+      return {
+        type: 'vehicle',
+        slug: this.slug,
+        name: this.name,
+        value: this.value,
+        vehicle: this.vehicle,
+      };
     }
 }

@@ -14,43 +14,43 @@ interface Props extends React.HTMLAttributes<HTMLElement> {
 }
 
 function Megamenu(props: Props) {
-    const {
-        menu,
-        onItemClick,
-        className,
-        ...rootProps
-    } = props;
-    const hasImage = !!menu.image;
+  const {
+    menu,
+    onItemClick,
+    className,
+    ...rootProps
+  } = props;
+  const hasImage = !!menu.image;
 
-    const rootClasses = classNames('megamenu', className);
+  const rootClasses = classNames('megamenu', className);
 
-    return (
-        <div className={rootClasses} {...rootProps}>
-            {hasImage && (
-                <div className="megamenu__image">
-                    <AppImage className="reflect-rtl" src={menu.image} />
-                </div>
-            )}
-            <div className="row">
-                {menu.columns.map((column, columnIndex) => {
-                    const columnClasses = classNames(`col-${column.size}`);
-                    const hasLinks = column.links?.length > 0;
-
-                    return (
-                        <div className={columnClasses} key={columnIndex}>
-                            {hasLinks && (
-                                <MegamenuLinks
-                                    className="megamenu__links"
-                                    links={column.links}
-                                    onItemClick={onItemClick}
-                                />
-                            )}
-                        </div>
-                    );
-                })}
-            </div>
+  return (
+    <div className={rootClasses} {...rootProps}>
+      {hasImage && (
+        <div className="megamenu__image">
+          <AppImage className="reflect-rtl" src={menu.image} />
         </div>
-    );
+      )}
+      <div className="row">
+        {menu.columns.map((column, columnIndex) => {
+          const columnClasses = classNames(`col-${column.size}`);
+          const hasLinks = column.links?.length > 0;
+
+          return (
+            <div className={columnClasses} key={columnIndex}>
+              {hasLinks && (
+                <MegamenuLinks
+                  className="megamenu__links"
+                  links={column.links}
+                  onItemClick={onItemClick}
+                />
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
 }
 
 export default Megamenu;

@@ -14,54 +14,54 @@ export class RangeFilterBuilder extends AbstractFilterBuilder {
     private value!: [number, number];
 
     test(product: IProduct): boolean {
-        const value = this.extractValue(product);
+      const value = this.extractValue(product);
 
-        return value >= this.value[0] && value <= this.value[1];
+      return value >= this.value[0] && value <= this.value[1];
     }
 
     parseValue(value: string): [number, number] {
-        return value.split('-').map((x) => parseFloat(x)) as [number, number];
+      return value.split('-').map((x) => parseFloat(x)) as [number, number];
     }
 
     makeItems(products: IProduct[], value: string): void {
-        this.max = dbProducts.reduce((acc, product) => Math.max(acc, this.extractValue(product)), 0);
-        this.min = dbProducts.reduce((acc, product) => Math.min(acc, this.extractValue(product)), this.max);
+      this.max = dbProducts.reduce((acc, product) => Math.max(acc, this.extractValue(product)), 0);
+      this.min = dbProducts.reduce((acc, product) => Math.min(acc, this.extractValue(product)), this.max);
 
-        /** Calculates the number of digits for rounding. */
-        const digit = 10 ** Math.max(Math.ceil(this.max).toString().length - 2, 0);
+      /** Calculates the number of digits for rounding. */
+      const digit = 10 ** Math.max(Math.ceil(this.max).toString().length - 2, 0);
 
-        this.max = Math.ceil(this.max / digit) * digit;
-        this.min = Math.floor(this.min / digit) * digit;
+      this.max = Math.ceil(this.max / digit) * digit;
+      this.min = Math.floor(this.min / digit) * digit;
 
-        if (this.min === this.max) {
-            this.max = Math.floor(this.max / digit + 1) * digit;
-        }
+      if (this.min === this.max) {
+        this.max = Math.floor(this.max / digit + 1) * digit;
+      }
 
-        this.value = [this.min, this.max];
+      this.value = [this.min, this.max];
 
-        if (value) {
-            this.value = this.parseValue(value);
-        }
+      if (value) {
+        this.value = this.parseValue(value);
+      }
     }
 
     calc(): void { }
 
     extractValue(product: IProduct): number {
-        if (this.slug === 'price') {
-            return product.price;
-        }
+      if (this.slug === 'price') {
+        return product.price;
+      }
 
-        throw Error();
+      throw Error();
     }
 
     build(): IRangeFilter {
-        return {
-            type: 'range',
-            slug: this.slug,
-            name: this.name,
-            min: this.min,
-            max: this.max,
-            value: this.value,
-        };
+      return {
+        type: 'range',
+        slug: this.slug,
+        name: this.name,
+        min: this.min,
+        max: this.max,
+        value: this.value,
+      };
     }
 }

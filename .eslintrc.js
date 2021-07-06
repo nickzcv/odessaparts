@@ -26,9 +26,9 @@ module.exports = {
         },
     },
     rules: {
-        indent: ['error', 4],
-        'react/jsx-indent': ['error', 4],
-        'react/jsx-indent-props': ['error', 4],
+        indent: ['error', 2],
+        'react/jsx-indent': ['error', 2],
+        'react/jsx-indent-props': ['error', 2],
         'react/prop-types': [0],
         'react/no-array-index-key': [0],
         'react/forbid-prop-types': [0],

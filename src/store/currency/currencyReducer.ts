@@ -6,20 +6,20 @@ import { withClientState } from '~/store/client';
 import { dataShopDefaultCurrency } from '~/data/shopCurrencies';
 
 const initialState: ICurrencyState = {
-    current: dataShopDefaultCurrency,
+  current: dataShopDefaultCurrency,
 };
 
 export const CURRENCY_NAMESPACE = 'currency';
 
 function currencyBaseReducer(state = initialState, action: CurrencyAction): ICurrencyState {
-    if (action.type === CURRENCY_CHANGE && state.current.code !== action.currency.code) {
-        return {
-            ...state,
-            current: JSON.parse(JSON.stringify(action.currency)),
-        };
-    }
+  if (action.type === CURRENCY_CHANGE && state.current.code !== action.currency.code) {
+    return {
+      ...state,
+      current: JSON.parse(JSON.stringify(action.currency)),
+    };
+  }
 
-    return state;
+  return state;
 }
 
 const currencyReducer = withClientState(currencyBaseReducer, CURRENCY_NAMESPACE);

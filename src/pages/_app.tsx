@@ -39,86 +39,86 @@ interface Props extends AppProps {
 }
 
 function App(props: Props) {
-    const { Component, pageProps, languageInitialProps } = props;
-    const store = useStore();
-    const applyClientState = useApplyClientState();
-    const loadUserVehicles = useLoadUserVehicles();
+  const { Component, pageProps, languageInitialProps } = props;
+  const store = useStore();
+  const applyClientState = useApplyClientState();
+  const loadUserVehicles = useLoadUserVehicles();
 
-    // Loading and saving state on the client side (cart, wishlist, etc.).
-    useEffect(() => {
-        const state = load();
+  // Loading and saving state on the client side (cart, wishlist, etc.).
+  useEffect(() => {
+    const state = load();
 
-        applyClientState(state || {});
+    applyClientState(state || {});
 
-        if (process.browser) {
-            store.subscribe(() => {
-                save(store.getState());
-            });
-        }
-    }, [store, applyClientState]);
+    if (process.browser) {
+      store.subscribe(() => {
+        save(store.getState());
+      });
+    }
+  }, [store, applyClientState]);
 
-    // Load user vehicles
-    useEffect(() => {
-        loadUserVehicles().then();
-    }, [loadUserVehicles]);
+  // Load user vehicles
+  useEffect(() => {
+    loadUserVehicles().then();
+  }, [loadUserVehicles]);
 
-    // preloader
-    useEffect(() => {
-        const preloader = document.querySelector('.site-preloader');
+  // preloader
+  useEffect(() => {
+    const preloader = document.querySelector('.site-preloader');
 
-        if (!preloader) {
-            return;
-        }
+    if (!preloader) {
+      return;
+    }
 
-        setTimeout(() => {
-            if (preloader.parentNode) {
-                preloader.parentNode.removeChild(preloader);
-            }
-        }, 100);
-    }, []);
+    setTimeout(() => {
+      if (preloader.parentNode) {
+        preloader.parentNode.removeChild(preloader);
+      }
+    }, 100);
+  }, []);
 
-    const page = useMemo(() => {
-        const PageLayout = Component.Layout || React.Fragment;
+  const page = useMemo(() => {
+    const PageLayout = Component.Layout || React.Fragment;
 
-        return (
-            <Layout>
-                <PageLayout>
-                    <Component {...pageProps} />
-                </PageLayout>
-            </Layout>
-        );
-    }, [Component, pageProps]);
-
-    // noinspection HtmlRequiredTitleElement
     return (
-        <LanguageProvider {...languageInitialProps}>
-            <CurrentVehicleGarageProvider>
-                <PageTitle />
-
-                <Head>
-                    <meta name="viewport" content="width=device-width, initial-scale=1" />
-                </Head>
-
-                {page}
-            </CurrentVehicleGarageProvider>
-        </LanguageProvider>
+      <Layout>
+        <PageLayout>
+          <Component {...pageProps} />
+        </PageLayout>
+      </Layout>
     );
+  }, [Component, pageProps]);
+
+  // noinspection HtmlRequiredTitleElement
+  return (
+    <LanguageProvider {...languageInitialProps}>
+      <CurrentVehicleGarageProvider>
+        <PageTitle />
+
+        <Head>
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+        </Head>
+
+        {page}
+      </CurrentVehicleGarageProvider>
+    </LanguageProvider>
+  );
 }
 
 App.getInitialProps = async (context: AppContext) => {
-    const dispatch = context.ctx.store.dispatch as AppDispatch;
+  const dispatch = context.ctx.store.dispatch as AppDispatch;
 
-    await dispatch(optionsSetAll({
-        desktopHeaderVariant: config.desktopHeaderVariant,
-        mobileHeaderVariant: config.mobileHeaderVariant,
-    }));
+  await dispatch(optionsSetAll({
+    desktopHeaderVariant: config.desktopHeaderVariant,
+    mobileHeaderVariant: config.mobileHeaderVariant,
+  }));
 
-    const language = getLanguageByLocale(context.router.locale!);
+  const language = getLanguageByLocale(context.router.locale!);
 
-    return {
-        ...(await AppBase.getInitialProps(context)),
-        languageInitialProps: await getLanguageInitialProps(language),
-    };
+  return {
+    ...(await AppBase.getInitialProps(context)),
+    languageInitialProps: await getLanguageInitialProps(language),
+  };
 };
 
 const WrappedApp = wrapper.withRedux(App);

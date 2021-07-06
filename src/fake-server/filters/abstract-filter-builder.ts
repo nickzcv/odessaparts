@@ -5,10 +5,10 @@ import { IProduct } from '~/interfaces/product';
 import { IFilter } from '~/interfaces/filter';
 
 export abstract class AbstractFilterBuilder {
-    constructor(
+  constructor(
         public slug: string,
         public name: string,
-    ) { }
+  ) { }
 
     abstract test(product: IProduct): boolean;
 

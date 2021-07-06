@@ -4,46 +4,46 @@
 import { IVehicle } from '~/interfaces/vehicle';
 import { VehicleApi } from '~/api/base';
 import {
-    addUserVehicles,
-    getMakes,
-    getModels,
-    getUserVehicles,
-    getVehicleByVin,
-    getVehicles,
-    getYears,
-    removeUserVehicles,
+  addUserVehicles,
+  getMakes,
+  getModels,
+  getUserVehicles,
+  getVehicleByVin,
+  getVehicles,
+  getYears,
+  removeUserVehicles,
 } from '~/fake-server/endpoints';
 
 export class FakeVehicleApi extends VehicleApi {
-    getYears(): Promise<number[]> {
-        return getYears();
-    }
+  getYears(): Promise<number[]> {
+    return getYears();
+  }
 
-    getMakes(year: number): Promise<string[]> {
-        return getMakes(year);
-    }
+  getMakes(year: number): Promise<string[]> {
+    return getMakes(year);
+  }
 
-    getModels(year: number, make: string): Promise<string[]> {
-        return getModels(year, make);
-    }
+  getModels(year: number, make: string): Promise<string[]> {
+    return getModels(year, make);
+  }
 
-    getVehicles(year: number, make: string, model: string): Promise<IVehicle[]> {
-        return getVehicles(year, make, model);
-    }
+  getVehicles(year: number, make: string, model: string): Promise<IVehicle[]> {
+    return getVehicles(year, make, model);
+  }
 
-    getVehicleByVin(vin: string): Promise<IVehicle> {
-        return getVehicleByVin(vin);
-    }
+  getVehicleByVin(vin: string): Promise<IVehicle> {
+    return getVehicleByVin(vin);
+  }
 
-    getUserVehicles(): Promise<IVehicle[]> {
-        return getUserVehicles();
-    }
+  getUserVehicles(): Promise<IVehicle[]> {
+    return getUserVehicles();
+  }
 
-    addUserVehicle(vehicleId: number): Promise<void> {
-        return addUserVehicles(vehicleId);
-    }
+  addUserVehicle(vehicleId: number): Promise<void> {
+    return addUserVehicles(vehicleId);
+  }
 
-    removeUserVehicle(vehicleId: number): Promise<void> {
-        return removeUserVehicles(vehicleId);
-    }
+  removeUserVehicle(vehicleId: number): Promise<void> {
+    return removeUserVehicles(vehicleId);
+  }
 }

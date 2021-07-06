@@ -11,12 +11,12 @@ interface MobileMenuContextData {
 }
 
 export const MobileMenuContext = React.createContext<MobileMenuContextData>({
-    lastPanelIdRef: { current: 0 },
-    containerRef: null,
-    open: () => {},
-    close: () => {},
-    stack: [],
-    bin: [],
+  lastPanelIdRef: { current: 0 },
+  containerRef: null,
+  open: () => {},
+  close: () => {},
+  stack: [],
+  bin: [],
 });
 
 export const MobileMenuLevelContext = React.createContext<number>(0);

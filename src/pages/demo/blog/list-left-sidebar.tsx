@@ -4,12 +4,12 @@ import React from 'react';
 import BlogPageCategory from '~/components/blog/BlogPageCategory';
 
 function Page() {
-    return (
-        <BlogPageCategory
-            layout="list"
-            sidebarPosition="start"
-        />
-    );
+  return (
+    <BlogPageCategory
+      layout="list"
+      sidebarPosition="start"
+    />
+  );
 }
 
 export default Page;

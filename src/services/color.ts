@@ -13,77 +13,77 @@ interface Cache {
 }
 
 export function hexToRgb(hex: string): RGB {
-    if (!/^#(([A-Fa-f0-9]{3}){1,2})$/.test(hex)) {
-        throw Error('Invalid color');
+  if (!/^#(([A-Fa-f0-9]{3}){1,2})$/.test(hex)) {
+    throw Error('Invalid color');
+  }
+
+  const color = hex.substr(1);
+  let rgb: string[];
+
+  if (color.length === 3) {
+    const mr = color.match(/./g);
+
+    if (!mr) {
+      throw Error('Invalid color');
     }
 
-    const color = hex.substr(1);
-    let rgb: string[];
+    rgb = mr.map((x) => x + x);
+  } else {
+    const mr = color.match(/.{2}/g);
 
-    if (color.length === 3) {
-        const mr = color.match(/./g);
-
-        if (!mr) {
-            throw Error('Invalid color');
-        }
-
-        rgb = mr.map((x) => x + x);
-    } else {
-        const mr = color.match(/.{2}/g);
-
-        if (!mr) {
-            throw Error('Invalid color');
-        }
-
-        rgb = mr;
+    if (!mr) {
+      throw Error('Invalid color');
     }
 
-    return rgb.map((x) => parseInt(x, 16)) as RGB;
+    rgb = mr;
+  }
+
+  return rgb.map((x) => parseInt(x, 16)) as RGB;
 }
 
 export function luminance(color: string) {
-    let rgb = hexToRgb(color);
+  let rgb = hexToRgb(color);
 
-    rgb = rgb.map((x) => x / 255).map((x) => {
-        if (x <= 0.03928) {
-            return x / 12.92;
-        }
+  rgb = rgb.map((x) => x / 255).map((x) => {
+    if (x <= 0.03928) {
+      return x / 12.92;
+    }
 
-        return ((x + 0.055) / 1.055) ** 2.4;
-    }) as RGB;
+    return ((x + 0.055) / 1.055) ** 2.4;
+  }) as RGB;
 
-    return 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2];
+  return 0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2];
 }
 
 export function contrast(color1: string, color2: string) {
-    const l1 = luminance(color1);
-    const l2 = luminance(color2);
+  const l1 = luminance(color1);
+  const l2 = luminance(color2);
 
-    return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+  return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
 }
 
 const cache: Cache = {};
 
 export function colorType(color: string): ColorType {
-    if (color in cache) {
-        return cache[color];
-    }
+  if (color in cache) {
+    return cache[color];
+  }
 
-    const whiteContras = contrast(color, '#fff');
-    const blackContras = contrast(color, '#000');
-    let result: ColorType;
+  const whiteContras = contrast(color, '#fff');
+  const blackContras = contrast(color, '#000');
+  let result: ColorType;
 
-    if (whiteContras === 1 && blackContras === 21) {
-        result = 'white';
-    } else if (whiteContras === 21 && blackContras === 1) {
-        result = 'black';
-    } else if (whiteContras >= 3 && blackContras < 10) {
-        result = 'dark';
-    } else {
-        result = 'light';
-    }
+  if (whiteContras === 1 && blackContras === 21) {
+    result = 'white';
+  } else if (whiteContras === 21 && blackContras === 1) {
+    result = 'black';
+  } else if (whiteContras >= 3 && blackContras < 10) {
+    result = 'dark';
+  } else {
+    result = 'light';
+  }
 
-    cache[color] = result;
+  cache[color] = result;
 
-    return result;
+  return result;
 }

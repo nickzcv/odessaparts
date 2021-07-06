@@ -17,38 +17,38 @@ export interface ISignInForm {
 }
 
 export function useSignInForm(options: ISignInFormOptions = {}) {
-    const signIn = useUserSignIn();
-    const { onSuccess } = options;
-    const [serverError, setServerError] = useState<string | null>(null);
-    const methods = useForm<ISignInForm>({
-        defaultValues: {
-            email: 'red-parts@example.com',
-            password: '123456',
-            remember: false,
-        },
-    });
-    const { handleSubmit } = methods;
-    const [submit, submitInProgress] = useAsyncAction((data: ISignInForm) => {
-        setServerError(null);
+  const signIn = useUserSignIn();
+  const { onSuccess } = options;
+  const [serverError, setServerError] = useState<string | null>(null);
+  const methods = useForm<ISignInForm>({
+    defaultValues: {
+      email: 'red-parts@example.com',
+      password: '123456',
+      remember: false,
+    },
+  });
+  const { handleSubmit } = methods;
+  const [submit, submitInProgress] = useAsyncAction((data: ISignInForm) => {
+    setServerError(null);
 
-        return signIn(data.email, data.password).then(
-            () => {
-                if (onSuccess) {
-                    onSuccess();
-                }
-            },
-            (error: Error) => {
-                setServerError(`ERROR_API_${error.message}`);
-            },
-        );
-    }, [signIn, setServerError, onSuccess]);
+    return signIn(data.email, data.password).then(
+      () => {
+        if (onSuccess) {
+          onSuccess();
+        }
+      },
+      (error: Error) => {
+        setServerError(`ERROR_API_${error.message}`);
+      },
+    );
+  }, [signIn, setServerError, onSuccess]);
 
-    return {
-        submit: useMemo(() => handleSubmit(submit), [handleSubmit, submit]),
-        submitInProgress: submitInProgress || methods.formState.isSubmitting,
-        serverError,
-        errors: methods.formState.errors,
-        register: methods.register,
-        watch: methods.watch,
-    };
+  return {
+    submit: useMemo(() => handleSubmit(submit), [handleSubmit, submit]),
+    submitInProgress: submitInProgress || methods.formState.isSubmitting,
+    serverError,
+    errors: methods.formState.errors,
+    register: methods.register,
+    watch: methods.watch,
+  };
 }

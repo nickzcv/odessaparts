@@ -49,5 +49,5 @@ const element = div.firstElementChild! as HTMLElement;
 document.body.appendChild(element);
 
 export default function createGallery(images: PhotoSwipe.Item[], options: PhotoSwipe.Options) {
-    return new PhotoSwipe(element, PhotoSwipeUIDefault, images, options);
+  return new PhotoSwipe(element, PhotoSwipeUIDefault, images, options);
 }

@@ -15,15 +15,15 @@ import wishlistReducer, { WISHLIST_NAMESPACE } from '~/store/wishlist/wishlistRe
 import { SHOP_NAMESPACE } from '~/store/shop/shopTypes';
 
 export default combineReducers({
-    version: (state: number = version) => state,
-    [CART_NAMESPACE]: cartReducer,
-    [COMPARE_NAMESPACE]: compareReducer,
-    [CURRENCY_NAMESPACE]: currencyReducer,
-    [GARAGE_NAMESPACE]: garageReducer,
-    [MOBILE_MENU_NAMESPACE]: mobileMenuReducer,
-    [OPTIONS_NAMESPACE]: optionsReducer,
-    [QUICKVIEW_NAMESPACE]: quickviewReducer,
-    [SHOP_NAMESPACE]: shopReducer,
-    [USER_NAMESPACE]: userReducer,
-    [WISHLIST_NAMESPACE]: wishlistReducer,
+  version: (state: number = version) => state,
+  [CART_NAMESPACE]: cartReducer,
+  [COMPARE_NAMESPACE]: compareReducer,
+  [CURRENCY_NAMESPACE]: currencyReducer,
+  [GARAGE_NAMESPACE]: garageReducer,
+  [MOBILE_MENU_NAMESPACE]: mobileMenuReducer,
+  [OPTIONS_NAMESPACE]: optionsReducer,
+  [QUICKVIEW_NAMESPACE]: quickviewReducer,
+  [SHOP_NAMESPACE]: shopReducer,
+  [USER_NAMESPACE]: userReducer,
+  [WISHLIST_NAMESPACE]: wishlistReducer,
 });

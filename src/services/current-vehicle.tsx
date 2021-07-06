@@ -1,10 +1,10 @@
 // react
 import React, {
-    PropsWithChildren,
-    useCallback,
-    useContext,
-    useMemo,
-    useState,
+  PropsWithChildren,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
 } from 'react';
 // application
 import { IVehicle } from '~/interfaces/vehicle';
@@ -18,36 +18,36 @@ type ContextData = readonly [
 const CurrentVehicleContext = React.createContext<ContextData>([null, () => {}]);
 
 export function useCurrentVehicle() {
-    return useContext(CurrentVehicleContext);
+  return useContext(CurrentVehicleContext);
 }
 
 export function CurrentVehicleGarageProvider(props: PropsWithChildren<{}>) {
-    const { children } = props;
-    const vehicle = useGarageCurrent();
-    const garageSetCurrent = useGarageSetCurrent();
+  const { children } = props;
+  const vehicle = useGarageCurrent();
+  const garageSetCurrent = useGarageSetCurrent();
 
-    const setVehicle = useCallback((vehicle: IVehicle | null) => {
-        garageSetCurrent(vehicle?.id || null);
-    }, [garageSetCurrent]);
+  const setVehicle = useCallback((vehicle: IVehicle | null) => {
+    garageSetCurrent(vehicle?.id || null);
+  }, [garageSetCurrent]);
 
-    const value = useMemo(() => [vehicle, setVehicle] as const, [vehicle, setVehicle]);
+  const value = useMemo(() => [vehicle, setVehicle] as const, [vehicle, setVehicle]);
 
-    return (
-        <CurrentVehicleContext.Provider value={value}>
-            {children}
-        </CurrentVehicleContext.Provider>
-    );
+  return (
+    <CurrentVehicleContext.Provider value={value}>
+      {children}
+    </CurrentVehicleContext.Provider>
+  );
 }
 
 export function CurrentVehicleScopeProvider(props: PropsWithChildren<{}>) {
-    const { children } = props;
-    const [initialVehicle] = useCurrentVehicle();
-    const [vehicle, setVehicle] = useState<IVehicle | null>(initialVehicle);
-    const value = useMemo(() => [vehicle, setVehicle] as const, [vehicle, setVehicle]);
+  const { children } = props;
+  const [initialVehicle] = useCurrentVehicle();
+  const [vehicle, setVehicle] = useState<IVehicle | null>(initialVehicle);
+  const value = useMemo(() => [vehicle, setVehicle] as const, [vehicle, setVehicle]);
 
-    return (
-        <CurrentVehicleContext.Provider value={value}>
-            {children}
-        </CurrentVehicleContext.Provider>
-    );
+  return (
+    <CurrentVehicleContext.Provider value={value}>
+      {children}
+    </CurrentVehicleContext.Provider>
+  );
 }

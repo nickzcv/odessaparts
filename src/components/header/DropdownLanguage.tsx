@@ -14,36 +14,36 @@ interface Item extends IDropdownItem {
 }
 
 function DropdownLanguage() {
-    const language = useLanguage();
-    const setLocale = useSetLocale();
+  const language = useLanguage();
+  const setLocale = useSetLocale();
 
-    const handleItemClick = async (item: Item) => {
-        setLocale(item.language.locale);
-    };
+  const handleItemClick = async (item: Item) => {
+    setLocale(item.language.locale);
+  };
 
-    const items: Item[] = useMemo(() => (
-        getAllLanguages().map(((eachLanguage) => ({
-            title: eachLanguage.name,
-            image: eachLanguage.icon,
-            language: eachLanguage,
-        })))
-    ), []);
+  const items: Item[] = useMemo(() => (
+    getAllLanguages().map(((eachLanguage) => ({
+      title: eachLanguage.name,
+      image: eachLanguage.icon,
+      language: eachLanguage,
+    })))
+  ), []);
 
-    const label = (
-        <React.Fragment>
-            <FormattedMessage id="TEXT_TOPBAR_LANGUAGE" />
-            :
-        </React.Fragment>
-    );
+  const label = (
+    <React.Fragment>
+      <FormattedMessage id="TEXT_TOPBAR_LANGUAGE" />
+      :
+    </React.Fragment>
+  );
 
-    return (
-        <Dropdown
-            label={label}
-            title={language.code.toUpperCase()}
-            items={items}
-            onItemClick={handleItemClick}
-        />
-    );
+  return (
+    <Dropdown
+      label={label}
+      title={language.code.toUpperCase()}
+      items={items}
+      onItemClick={handleItemClick}
+    />
+  );
 }
 
 export default DropdownLanguage;

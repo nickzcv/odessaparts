@@ -5,14 +5,14 @@ import { IListOptions } from '~/interfaces/list';
 import { SHOP_NAMESPACE, IShopState } from '~/store/shop/shopTypes';
 import { useAppAction, useAppSelector } from '~/store/hooks';
 import {
-    shopResetFiltersThunk,
-    shopResetFilterThunk,
-    shopSetFilterValueThunk,
-    shopSetOptionValueThunk,
+  shopResetFiltersThunk,
+  shopResetFilterThunk,
+  shopSetFilterValueThunk,
+  shopSetOptionValueThunk,
 } from '~/store/shop/shopActions';
 
 export function useShopSelector<T extends(state: IShopState) => any>(selector: T): ReturnType<T> {
-    return useAppSelector((state) => selector(state[SHOP_NAMESPACE]));
+  return useAppSelector((state) => selector(state[SHOP_NAMESPACE]));
 }
 
 export const useShop = () => useShopSelector((state) => state);
@@ -36,13 +36,13 @@ export const useShopSetOptionValueThunk = () => useAppAction(shopSetOptionValueT
 export const useShopSetFilterValueThunk = () => useAppAction(shopSetFilterValueThunk);
 
 export function useSetOption(
-    option: keyof IListOptions,
-    filterValueFn?: (data: any) => any,
+  option: keyof IListOptions,
+  filterValueFn?: (data: any) => any,
 ) {
-    const callback = useCallback(filterValueFn || ((x) => x), []);
-    const shopSetOptionValue = useShopSetOptionValueThunk();
+  const callback = useCallback(filterValueFn || ((x) => x), []);
+  const shopSetOptionValue = useShopSetOptionValueThunk();
 
-    return useCallback((data) => {
-        shopSetOptionValue(option, callback(data)).then();
-    }, [shopSetOptionValue, option, callback]);
+  return useCallback((data) => {
+    shopSetOptionValue(option, callback(data)).then();
+  }, [shopSetOptionValue, option, callback]);
 }

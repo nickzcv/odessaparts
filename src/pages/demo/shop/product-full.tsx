@@ -12,20 +12,20 @@ interface Props {
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => ({
-    props: {
-        product: await shopApi.getProductBySlug('brandix-brake-kit-bdx-750z370-s'),
-    },
+  props: {
+    product: await shopApi.getProductBySlug('brandix-brake-kit-bdx-750z370-s'),
+  },
 });
 
 function Page(props: Props) {
-    const { product } = props;
+  const { product } = props;
 
-    return (
-        <ShopPageProduct
-            product={product}
-            layout="full"
-        />
-    );
+  return (
+    <ShopPageProduct
+      product={product}
+      layout="full"
+    />
+  );
 }
 
 export default Page;

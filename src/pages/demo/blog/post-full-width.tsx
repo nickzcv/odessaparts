@@ -4,11 +4,11 @@ import React from 'react';
 import BlogPagePost from '~/components/blog/BlogPagePost';
 
 function Page() {
-    return (
-        <BlogPagePost
-            featuredImage
-        />
-    );
+  return (
+    <BlogPagePost
+      featuredImage
+    />
+  );
 }
 
 export default Page;

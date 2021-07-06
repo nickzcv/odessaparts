@@ -23,17 +23,17 @@ import { wrapper } from '~/store/store';
  */
 
 export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
-    await getShopPageData(context, 'interior-parts');
+  await getShopPageData(context, 'interior-parts');
 });
 
 function Page() {
-    return (
-        <ShopPageShop
-            layout="grid"
-            gridLayout="grid-4-sidebar"
-            sidebarPosition="start"
-        />
-    );
+  return (
+    <ShopPageShop
+      layout="grid"
+      gridLayout="grid-4-sidebar"
+      sidebarPosition="start"
+    />
+  );
 }
 
 export default Page;

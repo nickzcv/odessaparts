@@ -6,16 +6,16 @@ import ShopPageShop from '~/components/shop/ShopPageShop';
 import { wrapper } from '~/store/store';
 
 export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
-    await getShopPageData(context, 'engine-drivetrain');
+  await getShopPageData(context, 'engine-drivetrain');
 });
 
 function Page() {
-    return (
-        <ShopPageShop
-            layout="grid"
-            gridLayout="grid-6-full"
-        />
-    );
+  return (
+    <ShopPageShop
+      layout="grid"
+      gridLayout="grid-6-full"
+    />
+  );
 }
 
 export default Page;

@@ -14,30 +14,30 @@ export class CategoryFilterBuilder extends AbstractFilterBuilder {
     private items: IShopCategory[] = [];
 
     test(): boolean {
-        return true;
+      return true;
     }
 
     makeItems(products: IProduct[], value: string): void {
-        this.value = value === undefined ? null : value;
+      this.value = value === undefined ? null : value;
 
-        const category = shopCategoriesList.find((x) => x.slug === value);
+      const category = shopCategoriesList.find((x) => x.slug === value);
 
-        if (category) {
-            this.items = [prepareCategory(category, 1)];
-        } else {
-            this.items = shopCategoriesTree.map((x) => prepareCategory(x));
-        }
+      if (category) {
+        this.items = [prepareCategory(category, 1)];
+      } else {
+        this.items = shopCategoriesTree.map((x) => prepareCategory(x));
+      }
     }
 
     calc(): void {}
 
     build(): ICategoryFilter {
-        return {
-            type: 'category',
-            slug: this.slug,
-            name: this.name,
-            items: this.items,
-            value: this.value,
-        };
+      return {
+        type: 'category',
+        slug: this.slug,
+        name: this.name,
+        items: this.items,
+        value: this.value,
+      };
     }
 }

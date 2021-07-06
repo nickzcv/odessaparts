@@ -7,11 +7,11 @@ import { IBlogCategory } from '~/interfaces/category';
 import { IPost } from '~/interfaces/post';
 
 export class FakeBlogApi extends BlogApi {
-    getLatestPosts(limit: number): Promise<IPost[]> {
-        return getLatestPosts(limit);
-    }
+  getLatestPosts(limit: number): Promise<IPost[]> {
+    return getLatestPosts(limit);
+  }
 
-    getCategories(options: IGetBlogCategoriesOptions): Promise<IBlogCategory[]> {
-        return getBlogCategories(options);
-    }
+  getCategories(options: IGetBlogCategoriesOptions): Promise<IBlogCategory[]> {
+    return getBlogCategories(options);
+  }
 }

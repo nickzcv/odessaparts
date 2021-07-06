@@ -6,8 +6,8 @@ interface IConfig {
 }
 
 const config: IConfig = {
-    desktopHeaderVariant: 'spaceship/one',
-    mobileHeaderVariant: 'one',
+  desktopHeaderVariant: 'spaceship/one',
+  mobileHeaderVariant: 'one',
 };
 
 export default config;

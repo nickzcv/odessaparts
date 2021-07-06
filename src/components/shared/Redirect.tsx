@@ -11,16 +11,16 @@ interface Props {
 }
 
 function Redirect(props: Props) {
-    const { href } = props;
-    const router = useRouter();
+  const { href } = props;
+  const router = useRouter();
 
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            router.push(...hrefToRouterArgs(href)).then();
-        }
-    }, []);
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      router.push(...hrefToRouterArgs(href)).then();
+    }
+  }, []);
 
-    return null;
+  return null;
 }
 
 export default Redirect;

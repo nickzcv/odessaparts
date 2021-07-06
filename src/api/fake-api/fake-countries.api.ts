@@ -6,7 +6,7 @@ import { getCountries } from '~/fake-server/endpoints';
 import { ICountry } from '~/interfaces/country';
 
 export class FakeCountriesApi extends CountriesApi {
-    getCountries(): Promise<ICountry[]> {
-        return getCountries();
-    }
+  getCountries(): Promise<ICountry[]> {
+    return getCountries();
+  }
 }

@@ -22,59 +22,59 @@ interface Props {
 }
 
 const slickSettings: ISlickProps = {
-    dots: true,
-    arrows: false,
-    infinite: true,
-    speed: 400,
-    slidesToShow: 1,
-    slidesToScroll: 1,
+  dots: true,
+  arrows: false,
+  infinite: true,
+  speed: 400,
+  slidesToShow: 1,
+  slidesToScroll: 1,
 };
 
 function BlockSlideshow(props: Props) {
-    const { slides } = props;
+  const { slides } = props;
 
-    return (
-        <div className="block block-slideshow">
-            <div className="container">
-                <div className="block-slideshow__carousel">
-                    <AppSlick {...slickSettings}>
-                        {slides.map((slide, slideIdx) => (
-                            <AppLink href={slide.url} key={slideIdx} className="block-slideshow__item">
-                                <span
-                                    className={classNames(
-                                        'block-slideshow__item-image',
-                                        'block-slideshow__item-image--desktop',
-                                        'reflect-rtl',
-                                    )}
-                                    style={{ backgroundImage: `url(${baseUrl(slide.desktopImage)})` }}
-                                />
-                                <span
-                                    className={classNames(
-                                        'block-slideshow__item-image',
-                                        'block-slideshow__item-image--mobile',
-                                        'reflect-rtl',
-                                    )}
-                                    style={{ backgroundImage: `url(${baseUrl(slide.mobileImage)})` }}
-                                />
-                                {slide.offer && (
-                                    <span className="block-slideshow__item-offer">{slide.offer}</span>
-                                )}
-                                <span
-                                    className="block-slideshow__item-title"
-                                    dangerouslySetInnerHTML={{ __html: slide.title }}
-                                />
-                                <span
-                                    className="block-slideshow__item-details"
-                                    dangerouslySetInnerHTML={{ __html: slide.details }}
-                                />
-                                <span className="block-slideshow__item-button">{slide.buttonLabel}</span>
-                            </AppLink>
-                        ))}
-                    </AppSlick>
-                </div>
-            </div>
+  return (
+    <div className="block block-slideshow">
+      <div className="container">
+        <div className="block-slideshow__carousel">
+          <AppSlick {...slickSettings}>
+            {slides.map((slide, slideIdx) => (
+              <AppLink href={slide.url} key={slideIdx} className="block-slideshow__item">
+                <span
+                  className={classNames(
+                    'block-slideshow__item-image',
+                    'block-slideshow__item-image--desktop',
+                    'reflect-rtl',
+                  )}
+                  style={{ backgroundImage: `url(${baseUrl(slide.desktopImage)})` }}
+                />
+                <span
+                  className={classNames(
+                    'block-slideshow__item-image',
+                    'block-slideshow__item-image--mobile',
+                    'reflect-rtl',
+                  )}
+                  style={{ backgroundImage: `url(${baseUrl(slide.mobileImage)})` }}
+                />
+                {slide.offer && (
+                  <span className="block-slideshow__item-offer">{slide.offer}</span>
+                )}
+                <span
+                  className="block-slideshow__item-title"
+                  dangerouslySetInnerHTML={{ __html: slide.title }}
+                />
+                <span
+                  className="block-slideshow__item-details"
+                  dangerouslySetInnerHTML={{ __html: slide.details }}
+                />
+                <span className="block-slideshow__item-button">{slide.buttonLabel}</span>
+              </AppLink>
+            ))}
+          </AppSlick>
         </div>
-    );
+      </div>
+    </div>
+  );
 }
 
 export default React.memo(BlockSlideshow);

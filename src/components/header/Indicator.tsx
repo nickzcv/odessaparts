@@ -1,9 +1,9 @@
 // react
 import React, {
-    PropsWithChildren,
-    useMemo,
-    useRef,
-    useState,
+  PropsWithChildren,
+  useMemo,
+  useRef,
+  useState,
 } from 'react';
 // third-party
 import classNames from 'classnames';
@@ -28,78 +28,78 @@ interface Props extends PropsWithChildren<{}> {
 }
 
 function Indicator(props: Props) {
-    const {
-        icon,
-        href,
-        label,
-        value,
-        counter,
-        trigger = 'none',
-        children,
-        controllerRef,
-    } = props;
-    const hasLabel = label !== undefined && label !== null;
-    const hasValue = value !== undefined && value !== null;
-    const buttonType = href !== undefined ? 'link' : 'button';
-    const showCounter = counter !== undefined && counter !== null;
-    const [isOpen, setIsOpen] = useState(false);
-    const rootRef = useRef<HTMLDivElement>(null);
+  const {
+    icon,
+    href,
+    label,
+    value,
+    counter,
+    trigger = 'none',
+    children,
+    controllerRef,
+  } = props;
+  const hasLabel = label !== undefined && label !== null;
+  const hasValue = value !== undefined && value !== null;
+  const buttonType = href !== undefined ? 'link' : 'button';
+  const showCounter = counter !== undefined && counter !== null;
+  const [isOpen, setIsOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
 
-    const controller = useMemo<IIndicatorController>(() => ({
-        close: () => setIsOpen(false),
-    }), [setIsOpen]);
+  const controller = useMemo<IIndicatorController>(() => ({
+    close: () => setIsOpen(false),
+  }), [setIsOpen]);
 
-    if (controllerRef) {
-        controllerRef.current = controller;
+  if (controllerRef) {
+    controllerRef.current = controller;
+  }
+
+  useGlobalMousedown((event) => {
+    if (rootRef.current && !rootRef.current.contains(event.target as HTMLElement)) {
+      setIsOpen(false);
     }
+  }, [setIsOpen, rootRef]);
 
-    useGlobalMousedown((event) => {
-        if (rootRef.current && !rootRef.current.contains(event.target as HTMLElement)) {
-            setIsOpen(false);
-        }
-    }, [setIsOpen, rootRef]);
+  const handleButtonClick = (event: React.MouseEvent) => {
+    if (trigger === 'click') {
+      event.preventDefault();
 
-    const handleButtonClick = (event: React.MouseEvent) => {
-        if (trigger === 'click') {
-            event.preventDefault();
+      setIsOpen((prevState) => !prevState);
+    }
+  };
 
-            setIsOpen((prevState) => !prevState);
-        }
-    };
+  const buttonContent = (
+    <React.Fragment>
+      <span className="indicator__icon">
+        {icon}
+        {showCounter && <span className="indicator__counter">{counter}</span>}
+      </span>
 
-    const buttonContent = (
-        <React.Fragment>
-            <span className="indicator__icon">
-                {icon}
-                {showCounter && <span className="indicator__counter">{counter}</span>}
-            </span>
+      {hasLabel && <span className="indicator__title">{label}</span>}
+      {hasValue && <span className="indicator__value">{value}</span>}
+    </React.Fragment>
+  );
 
-            {hasLabel && <span className="indicator__title">{label}</span>}
-            {hasValue && <span className="indicator__value">{value}</span>}
-        </React.Fragment>
-    );
+  const rootClasses = classNames('indicator', `indicator--trigger--${trigger}`, {
+    'indicator--open': isOpen,
+  });
 
-    const rootClasses = classNames('indicator', `indicator--trigger--${trigger}`, {
-        'indicator--open': isOpen,
-    });
-
-    return (
-        <div className={rootClasses} ref={rootRef}>
-            {buttonType === 'button' && (
-                <button className="indicator__button" type="button" onClick={handleButtonClick}>
-                    {buttonContent}
-                </button>
-            )}
-            {buttonType === 'link' && (
-                <AppLink href={href} className="indicator__button" onClick={handleButtonClick}>
-                    {buttonContent}
-                </AppLink>
-            )}
-            <div className="indicator__content">
-                {children}
-            </div>
-        </div>
-    );
+  return (
+    <div className={rootClasses} ref={rootRef}>
+      {buttonType === 'button' && (
+        <button className="indicator__button" type="button" onClick={handleButtonClick}>
+          {buttonContent}
+        </button>
+      )}
+      {buttonType === 'link' && (
+        <AppLink href={href} className="indicator__button" onClick={handleButtonClick}>
+          {buttonContent}
+        </AppLink>
+      )}
+      <div className="indicator__content">
+        {children}
+      </div>
+    </div>
+  );
 }
 
 export default Indicator;

@@ -8,21 +8,21 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 function RadioButton(props: Props) {
-    const { className, inputRef, ...inputProps } = props;
+  const { className, inputRef, ...inputProps } = props;
 
-    return (
-        <span className={classNames('input-radio', className)}>
-            <span className="input-radio__body">
-                <input
-                    className="input-radio__input"
-                    type="radio"
-                    ref={inputRef}
-                    {...inputProps}
-                />
-                <span className="input-radio__circle" />
-            </span>
-        </span>
-    );
+  return (
+    <span className={classNames('input-radio', className)}>
+      <span className="input-radio__body">
+        <input
+          className="input-radio__input"
+          type="radio"
+          ref={inputRef}
+          {...inputProps}
+        />
+        <span className="input-radio__circle" />
+      </span>
+    </span>
+  );
 }
 
 export default RadioButton;

@@ -38,174 +38,174 @@ interface IForm {
 }
 
 function Page() {
-    const router = useRouter();
-    const intl = useIntl();
-    const user = useUser();
-    const userSignUp = useUserSignUp();
-    const cart = useCart();
-    const formMethods = useForm<IForm>({
-        defaultValues: {
-            billingAddress: getAddressFormDefaultValue(),
-            createAccount: false,
-            account: getRegisterFormDefaultValue(),
-            shipToDifferentAddress: false,
-            shippingAddress: getAddressFormDefaultValue(),
-            comment: '',
-            payment: 'bank',
-        },
-    });
-    const { handleSubmit, register, formState: { errors } } = formMethods;
-    const [checkout, checkoutInProgress] = useAsyncAction(async (data: IForm) => {
-        const { billingAddress } = data;
-        const shippingAddress = data.shipToDifferentAddress ? data.shippingAddress : data.billingAddress;
+  const router = useRouter();
+  const intl = useIntl();
+  const user = useUser();
+  const userSignUp = useUserSignUp();
+  const cart = useCart();
+  const formMethods = useForm<IForm>({
+    defaultValues: {
+      billingAddress: getAddressFormDefaultValue(),
+      createAccount: false,
+      account: getRegisterFormDefaultValue(),
+      shipToDifferentAddress: false,
+      shippingAddress: getAddressFormDefaultValue(),
+      comment: '',
+      payment: 'bank',
+    },
+  });
+  const { handleSubmit, register, formState: { errors } } = formMethods;
+  const [checkout, checkoutInProgress] = useAsyncAction(async (data: IForm) => {
+    const { billingAddress } = data;
+    const shippingAddress = data.shipToDifferentAddress ? data.shippingAddress : data.billingAddress;
 
-        const checkoutData: ICheckoutData = {
-            payment: data.payment,
-            items: cart.items.map((item) => ({
-                productId: item.product.id,
-                options: item.options.map((option) => ({
-                    name: option.name,
-                    value: option.value,
-                })),
-                quantity: item.quantity,
-            })),
-            billingAddress,
-            shippingAddress,
-            comment: data.comment,
-        };
+    const checkoutData: ICheckoutData = {
+      payment: data.payment,
+      items: cart.items.map((item) => ({
+        productId: item.product.id,
+        options: item.options.map((option) => ({
+          name: option.name,
+          value: option.value,
+        })),
+        quantity: item.quantity,
+      })),
+      billingAddress,
+      shippingAddress,
+      comment: data.comment,
+    };
 
-        if (data.createAccount) {
-            try {
-                await userSignUp(data.account.email, data.account.password);
-            } catch (error) {
-                alert(intl.formatMessage({ id: `ERROR_API_${error.message}` }));
+    if (data.createAccount) {
+      try {
+        await userSignUp(data.account.email, data.account.password);
+      } catch (error) {
+        alert(intl.formatMessage({ id: `ERROR_API_${error.message}` }));
 
-                return;
-            }
-        }
-
-        const order = await shopApi.checkout(checkoutData);
-
-        await router.push(...hrefToRouterArgs(url.checkoutSuccess(order)));
-    }, [intl, cart, userSignUp, router]);
-
-    useEffect(() => {
-        if (cart.stateFrom === 'client' && cart.items.length < 1) {
-            router.replace(url.cart()).then();
-        }
-    }, [cart.stateFrom, cart.items.length, router]);
-
-    if (cart.items.length < 1) {
-        return null;
+        return;
+      }
     }
 
-    const { ref: agreeRef, ...agreeProps } = register('agree', { required: true });
+    const order = await shopApi.checkout(checkoutData);
 
-    return (
-        <React.Fragment>
-            <PageTitle>{intl.formatMessage({ id: 'HEADER_CHECKOUT' })}</PageTitle>
+    await router.push(...hrefToRouterArgs(url.checkoutSuccess(order)));
+  }, [intl, cart, userSignUp, router]);
 
-            <BlockHeader
-                pageTitle={<FormattedMessage id="HEADER_CHECKOUT" />}
-                breadcrumb={[
-                    { title: (<FormattedMessage id="LINK_HOME" />), url: url.home() },
-                    { title: (<FormattedMessage id="LINK_CART" />), url: url.cart() },
-                    { title: (<FormattedMessage id="LINK_CHECKOUT" />), url: url.checkout() },
-                ]}
-            />
+  useEffect(() => {
+    if (cart.stateFrom === 'client' && cart.items.length < 1) {
+      router.replace(url.cart()).then();
+    }
+  }, [cart.stateFrom, cart.items.length, router]);
 
-            <FormProvider {...formMethods}>
-                <form className="checkout block" onSubmit={handleSubmit(checkout)}>
-                    <div className="container container--max--xl">
-                        <div className="row">
-                            {!user && (
-                                <div className="col-12 mb-3">
-                                    <div className="alert alert-lg alert-primary">
-                                        <FormattedMessage
-                                            id="TEXT_ALERT_RETURNING_CUSTOMER"
-                                            values={{
-                                                link: (
-                                                    <AppLink href={url.signIn()}>
-                                                        <FormattedMessage id="TEXT_ALERT_RETURNING_CUSTOMER_LINK" />
-                                                    </AppLink>
-                                                ),
-                                            }}
-                                        />
-                                    </div>
-                                </div>
-                            )}
+  if (cart.items.length < 1) {
+    return null;
+  }
 
-                            <div className="col-12 col-lg-6 col-xl-7">
-                                <div className="card mb-lg-0">
-                                    <div className="card-body card-body--padding--2">
-                                        <CheckoutForm />
-                                    </div>
-                                </div>
-                            </div>
+  const { ref: agreeRef, ...agreeProps } = register('agree', { required: true });
 
-                            <div className="col-12 col-lg-6 col-xl-5 mt-4 mt-lg-0">
-                                <div className="card mb-0">
-                                    <div className="card-body card-body--padding--2">
-                                        <h3 className="card-title">
-                                            <FormattedMessage id="HEADER_YOUR_ORDER" />
-                                        </h3>
+  return (
+    <React.Fragment>
+      <PageTitle>{intl.formatMessage({ id: 'HEADER_CHECKOUT' })}</PageTitle>
 
-                                        <CheckoutCart />
+      <BlockHeader
+        pageTitle={<FormattedMessage id="HEADER_CHECKOUT" />}
+        breadcrumb={[
+          { title: (<FormattedMessage id="LINK_HOME" />), url: url.home() },
+          { title: (<FormattedMessage id="LINK_CART" />), url: url.cart() },
+          { title: (<FormattedMessage id="LINK_CHECKOUT" />), url: url.checkout() },
+        ]}
+      />
 
-                                        <CheckoutPayments />
+      <FormProvider {...formMethods}>
+        <form className="checkout block" onSubmit={handleSubmit(checkout)}>
+          <div className="container container--max--xl">
+            <div className="row">
+              {!user && (
+                <div className="col-12 mb-3">
+                  <div className="alert alert-lg alert-primary">
+                    <FormattedMessage
+                      id="TEXT_ALERT_RETURNING_CUSTOMER"
+                      values={{
+                        link: (
+                          <AppLink href={url.signIn()}>
+                            <FormattedMessage id="TEXT_ALERT_RETURNING_CUSTOMER_LINK" />
+                          </AppLink>
+                        ),
+                      }}
+                    />
+                  </div>
+                </div>
+              )}
 
-                                        <div className="checkout__agree form-group">
-                                            <div className="form-check">
-                                                <Checkbox
-                                                    id="checkout-form-agree"
-                                                    className={classNames('form-check-input', {
-                                                        'is-invalid': errors.agree,
-                                                    })}
-                                                    inputRef={agreeRef}
-                                                    {...agreeProps}
-                                                />
-                                                <label className="form-check-label" htmlFor="checkout-form-agree">
-                                                    <FormattedMessage
-                                                        id="INPUT_TERMS_AGREE_LABEL"
-                                                        values={{
-                                                            link: (
-                                                                <AppLink href={url.pageTerms()} target="_blank">
-                                                                    <FormattedMessage
-                                                                        id="INPUT_TERMS_AGREE_LABEL_LINK"
-                                                                    />
-                                                                </AppLink>
-                                                            ),
-                                                        }}
-                                                    />
-                                                </label>
-                                            </div>
-                                        </div>
+              <div className="col-12 col-lg-6 col-xl-7">
+                <div className="card mb-lg-0">
+                  <div className="card-body card-body--padding--2">
+                    <CheckoutForm />
+                  </div>
+                </div>
+              </div>
 
-                                        <button
-                                            type="submit"
-                                            className={classNames(
-                                                'btn',
-                                                'btn-primary',
-                                                'btn-xl',
-                                                'btn-block',
-                                                {
-                                                    'btn-loading': checkoutInProgress,
-                                                },
-                                            )}
-                                        >
-                                            <FormattedMessage id="BUTTON_PLACE_ORDER" />
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+              <div className="col-12 col-lg-6 col-xl-5 mt-4 mt-lg-0">
+                <div className="card mb-0">
+                  <div className="card-body card-body--padding--2">
+                    <h3 className="card-title">
+                      <FormattedMessage id="HEADER_YOUR_ORDER" />
+                    </h3>
+
+                    <CheckoutCart />
+
+                    <CheckoutPayments />
+
+                    <div className="checkout__agree form-group">
+                      <div className="form-check">
+                        <Checkbox
+                          id="checkout-form-agree"
+                          className={classNames('form-check-input', {
+                            'is-invalid': errors.agree,
+                          })}
+                          inputRef={agreeRef}
+                          {...agreeProps}
+                        />
+                        <label className="form-check-label" htmlFor="checkout-form-agree">
+                          <FormattedMessage
+                            id="INPUT_TERMS_AGREE_LABEL"
+                            values={{
+                              link: (
+                                <AppLink href={url.pageTerms()} target="_blank">
+                                  <FormattedMessage
+                                    id="INPUT_TERMS_AGREE_LABEL_LINK"
+                                  />
+                                </AppLink>
+                              ),
+                            }}
+                          />
+                        </label>
+                      </div>
                     </div>
-                </form>
-            </FormProvider>
 
-            <BlockSpace layout="before-footer" />
-        </React.Fragment>
-    );
+                    <button
+                      type="submit"
+                      className={classNames(
+                        'btn',
+                        'btn-primary',
+                        'btn-xl',
+                        'btn-block',
+                        {
+                          'btn-loading': checkoutInProgress,
+                        },
+                      )}
+                    >
+                      <FormattedMessage id="BUTTON_PLACE_ORDER" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </FormProvider>
+
+      <BlockSpace layout="before-footer" />
+    </React.Fragment>
+  );
 }
 
 export default Page;
